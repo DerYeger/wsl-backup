@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Lib (backupSingleDistribution, backupAllDistributions) where
+module Lib (backupSingleDistribution, backupAllDistributions, interactiveBackup) where
 
 import Control.Exception (try)
 import Data.List (break, isSuffixOf)
@@ -83,5 +83,8 @@ backupAllDistributions dir = do
   checkTargetDir dir
   ds <-  distributions
   printDistributions ds
-  putStrLn ""
+  putStr "\n"
   mapM_ (exportDistribution dir) ds
+
+interactiveBackup :: IO ()
+interactiveBackup = putStrLn "Enter target directory: " >> getLine >>= (\dir -> putStr "\n" >> backupAllDistributions dir)
