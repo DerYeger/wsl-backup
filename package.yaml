@@ -1,0 +1,53 @@
+name: wsl-backup
+version: 1.0.0
+github: "DerYeger/wsl-backup"
+license: BSD3
+author: "Jan Müller"
+maintainer: "janmueller3698@gmail.com"
+copyright: "2021 Jan Müller"
+
+extra-source-files:
+  - README.md
+  - CHANGELOG.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description: Please see the README on GitHub at <https://github.com/DerYeger/wsl-backup#readme>
+
+dependencies:
+  - base >= 4.7 && < 5
+  - directory
+  - filepath
+  - process
+  - split
+  - text
+
+library:
+  source-dirs: src
+
+executables:
+  wsl-backup:
+    main: Main.hs
+    source-dirs: app
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - wsl-backup
+
+tests:
+  wsl-backup-test:
+    main: Spec.hs
+    source-dirs: test
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - wsl-backup

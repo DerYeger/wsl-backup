@@ -1,0 +1,7 @@
+extra-deps:
+  - split-0.2.3.4@sha256:048c75891d63a03828f97667214aaaf0e67b7dcbfec297753e39939ffda6f51a,2647
+local-bin-path: dist/
+packages:
+  - .
+resolver:
+  compiler: ghc-9.0.1

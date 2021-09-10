@@ -1,0 +1,27 @@
+name: CD
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Setup Haskell
+        uses: haskell/actions/setup@v1
+        with:
+          ghc-version: "9.0.1"
+          enable-stack: true
+          stack-version: "latest"
+      - name: Compile
+        run: stack build --copy-bins
+      - name: Upload assets
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/wsl-backup.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
