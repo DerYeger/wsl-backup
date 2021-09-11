@@ -19,5 +19,10 @@ jobs:
         with:
           path: 'C:\Users\runneradmin\AppData\Local\Programs\stack'
           key: ghc-${{ hashFiles('stack.yaml.lock') }}
+      - name: Cache .stack-work
+        uses: actions/cache@v2
+        with:
+          path: ./.stack-work
+          key: stack-work
       - name: Build
         run: stack build
