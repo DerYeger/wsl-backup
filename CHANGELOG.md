@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/DerYeger/wsl-backup/compare/v1.1.0...v1.2.0) (2021-09-11)
+
+
+### Features
+
+* add emojis ([8add598](https://github.com/DerYeger/wsl-backup/commit/8add598889b4ac8fad6aa9a74cfcbd37174246ed))
+
 # [1.1.0](https://github.com/DerYeger/wsl-backup/compare/v1.0.0...v1.1.0) (2021-09-10)
 
 
