@@ -19,18 +19,18 @@ checkTargetDir dir = do
   result <- try (listDirectory dir) :: IO (Either IOError [FilePath])
   case result of
     Left err -> do
-      putStrLn $ "Directory '" ++ dir ++ "' does not exist\n"
+      putStrLn $ "❌ Directory '" ++ dir ++ "' does not exist\n"
       exitFailure
-    Right files -> putStrLn $ "Target directory: " ++ dir ++ "\n"
+    Right files -> putStrLn $ "💽 Target directory: " ++ dir ++ "\n"
 
 checkDistribution:: Distribution -> IO ()
 checkDistribution d = do
   exists <- distributionExists d
   if exists
     then
-      putStrLn $ "Distribution: " ++ d
+      putStrLn $ "🔎 Distribution: " ++ d
     else do
-      putStrLn $ "Distribution '" ++ d ++ "' does not exist"
+      putStrLn $ "❌ Distribution '" ++ d ++ "' does not exist"
       exitFailure
 
 wslExport :: String -> String
@@ -44,9 +44,9 @@ isTar = isSuffixOf ".tar"
 
 exportDistribution :: Dir -> Distribution -> IO ()
 exportDistribution dir d = do
-  putStrLn $ "Exporting '" ++ d ++ "' to '" ++ dir ++ "'"
+  putStrLn $ "⏳ Exporting '" ++ d ++ "' to '" ++ dir ++ "'"
   callCommand . wslExport $ makeArgs dir d
-  putStrLn $ "'" ++ d ++ "' exported successfully\n"
+  putStrLn $ "✅ '" ++ d ++ "' exported successfully\n"
 
 removeSpecialChars :: String -> String
 removeSpecialChars = filter (\c -> c /= '\NUL' && c /= '\n')
@@ -62,7 +62,7 @@ extractDistributions s = filter (not . null) . tail $ splitOn "\r" s
 
 printDistributions :: [Distribution] -> IO ()
 printDistributions ds = do
-  putStrLn $ "" ++ show (length ds) ++ " distributions found:"
+  putStrLn $ "🔎 " ++ show (length ds) ++ " distributions found:"
   mapM_ putStrLn ds
 
 distributions :: IO [Distribution]
@@ -79,7 +79,7 @@ backupSingleDistribution dir d = do
 
 backupAllDistributions :: Dir -> IO ()
 backupAllDistributions dir = do
-  putStrLn "No distribution specified. Creating backups for all distributions"
+  putStrLn "🔧 No distribution specified. Creating backups for all distributions"
   checkTargetDir dir
   ds <-  distributions
   printDistributions ds
@@ -87,4 +87,4 @@ backupAllDistributions dir = do
   mapM_ (exportDistribution dir) ds
 
 interactiveBackup :: IO ()
-interactiveBackup = putStrLn "Enter target directory: " >> getLine >>= (\dir -> putStr "\n" >> backupAllDistributions dir)
+interactiveBackup = putStrLn "💽 Enter target directory: " >> getLine >>= (\dir -> putStr "\n" >> backupAllDistributions dir)
