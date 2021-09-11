@@ -26,3 +26,21 @@ jobs:
           key: stack-work
       - name: Build
         run: stack build
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    needs: [build]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+        with:
+          token: ${{ secrets.PAT }}
+      - name: Semantic release
+        uses: cycjimmy/semantic-release-action@v2.5.4
+        with:
+          extra_plugins: |
+            @semantic-release/changelog 
+            @semantic-release/git
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
