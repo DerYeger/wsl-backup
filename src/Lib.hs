@@ -19,9 +19,9 @@ checkTargetDir dir = do
   result <- try (listDirectory dir) :: IO (Either IOError [FilePath])
   case result of
     Left err -> do
-      putStrLn $ "❌ Directory '" ++ dir ++ "' does not exist\n"
+      putStrLn $ "❌ Directory '" ++ dir ++ "' does not exist"
       exitFailure
-    Right files -> putStrLn $ "💽 Target directory: " ++ dir ++ "\n"
+    Right files -> putStrLn $ "💽 Target directory: " ++ dir
 
 checkDistribution:: Distribution -> IO ()
 checkDistribution d = do
@@ -44,9 +44,9 @@ isTar = isSuffixOf ".tar"
 
 exportDistribution :: Dir -> Distribution -> IO ()
 exportDistribution dir d = do
-  putStrLn $ "⏳ Exporting '" ++ d ++ "' to '" ++ dir ++ "'"
+  putStrLn $ "\n⏳ Exporting '" ++ d ++ "' to '" ++ dir ++ "'. This may take a while."
   callCommand . wslExport $ makeArgs dir d
-  putStrLn $ "✅ '" ++ d ++ "' exported successfully\n"
+  putStrLn $ "✅ '" ++ d ++ "' exported successfully"
 
 removeSpecialChars :: String -> String
 removeSpecialChars = filter (\c -> c /= '\NUL' && c /= '\n')
@@ -62,7 +62,7 @@ extractDistributions s = filter (not . null) . tail $ splitOn "\r" s
 
 printDistributions :: [Distribution] -> IO ()
 printDistributions ds = do
-  putStrLn $ "🔎 " ++ show (length ds) ++ " distributions found:"
+  putStrLn $ "\n🔎 " ++ show (length ds) ++ " distributions found:"
   mapM_ putStrLn ds
 
 distributions :: IO [Distribution]
@@ -79,11 +79,10 @@ backupSingleDistribution dir d = do
 
 backupAllDistributions :: Dir -> IO ()
 backupAllDistributions dir = do
-  putStrLn "🔧 No distribution specified. Creating backups for all distributions"
+  putStrLn "🔧 No distribution specified. Creating backups for all distributions."
   checkTargetDir dir
   ds <-  distributions
   printDistributions ds
-  putStr "\n"
   mapM_ (exportDistribution dir) ds
 
 interactiveBackup :: IO ()
