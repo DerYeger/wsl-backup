@@ -9,29 +9,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
-      - name: Setup Haskell
-        uses: haskell/actions/setup@v1
+      - name: Cache dependencies
+        uses: actions/cache@v2
         with:
-          ghc-version: "9.0.1"
-          enable-stack: true
-          stack-version: "latest"
-      - name: Compile
-        run: stack build --copy-bins
-  release:
-    name: Release
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push'
-    needs: [build]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@master
+          path: 'C:\Users\runneradmin\AppData\Roaming\stack'
+          key: ${{ runner.os }}-store-${{ hashFiles('stack.yaml.lock') }}-${{ hashFiles('wsl-backup.cabal') }}
+      - name: Cache GHC
+        uses: actions/cache@v2
         with:
-          token: ${{ secrets.PAT }}
-      - name: Semantic release
-        uses: cycjimmy/semantic-release-action@v2.5.4
-        with:
-          extra_plugins: |
-            @semantic-release/changelog
-            @semantic-release/git
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+          path: 'C:\Users\runneradmin\AppData\Local\Programs\stack'
+          key: ghc-${{ hashFiles('stack.yaml.lock') }}
+      - name: Build
+        run: stack build
