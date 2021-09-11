@@ -14,16 +14,22 @@ jobs:
         with:
           path: 'C:\Users\runneradmin\AppData\Roaming\stack'
           key: ${{ runner.os }}-store-${{ hashFiles('stack.yaml.lock') }}-${{ hashFiles('wsl-backup.cabal') }}
+          restore-keys: |
+            ${{ runner.os }}-store-
       - name: Cache GHC
         uses: actions/cache@v2
         with:
           path: 'C:\Users\runneradmin\AppData\Local\Programs\stack'
           key: ghc-${{ hashFiles('stack.yaml.lock') }}
+          restore-keys: |
+            ghc-
       - name: Cache .stack-work
         uses: actions/cache@v2
         with:
           path: ./.stack-work
           key: stack-work
+          restore-keys: |
+            stack-work
       - name: Build
         run: stack build
   release:
