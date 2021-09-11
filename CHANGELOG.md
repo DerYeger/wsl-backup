@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/DerYeger/wsl-backup/compare/v1.2.0...v1.2.1) (2021-09-11)
+
+
+### Bug Fixes
+
+* improve output ([bc6a7b4](https://github.com/DerYeger/wsl-backup/commit/bc6a7b45eb9a89159b56b9ed65249f3dbdf235aa))
+
 # [1.2.0](https://github.com/DerYeger/wsl-backup/compare/v1.1.0...v1.2.0) (2021-09-11)
 
 
